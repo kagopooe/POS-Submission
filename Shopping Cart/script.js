@@ -1,77 +1,210 @@
-        // Cost of all products in the cart
-        var total = 0;
-        // Index
-        var i = 1;
-        // Message 
-        var message = "Please select a size";
-        // List of the amount of every product in the cart
-        var itemCost = [];
+let products = JSON.parse(localStorage.getItem("products")) ? JSON.parse(localStorage.getItem("products")) : 
+[
+  {
+  title:"Leon Draisaitl",
+  category:"NHL 22",
+  price:"70.00",
+  img:"https://i.postimg.cc/MZC2Nr9Q/3869206-draisaitlfaceoff-wm-na-16x9.png"
+  },
+  {
+  title:"Aaron Ramsdale",
+  category:"Fifa 22",
+  price:"54.99",
+  img:"https://i.postimg.cc/jSKVdn0q/0-IMG-2222.jpg"
+  },
+  
+  {
+  title:"Francis Ngannou",
+  category:"UFC 3",
+  price:" 99.99",
+  img:"https://i.postimg.cc/3xZsyrYX/kenneth-lau-francis-ngannou-2.jpg"
+  },
+  
+  {
+  title:"Tom Brady",
+  category:"Madden 22",
+  price:"104.99",
+  img:"https://i.postimg.cc/XvB084YG/960x0.jpg"
+  },    
+  ]
+  console.log(products);
+  let cart = JSON.parse(localStorage.getItem("cart"))
+  ? JSON.parse(localStorage.getItem("cart"))
+  : [];
 
-        // Add to cart
-        function add(n){
-            // n is the rank of the T-shirt
-            sizeId = "size" + n;
-            /* Each shirt has Id start with a root + his rank (Ex: Size id for product 1 is size1,
-             price id for product 3 is price 3 ...)*/
-            messageId = "message" + n;
-            // The size of the selected shirt
-            size = document.getElementById(sizeId).value;
-            // If the client don't select size, a message will show up
-            if (size==="size"){
-                document.getElementById(messageId).innerHTML = message;
-                return 0;
-            }
-            // Getting all Id of the selected shirt(brand ex: nike, price and quantity)
-            brand = "brand" + n;
-            priceId = "price" + n;
-            quantityId = "quantity" + n;
-            // Getting details of the selected shirt
-            // brand
-            name = document.getElementById(brand).innerHTML;
-            // price
-            price = document.getElementById(priceId).innerHTML;
-            // quantity
-            quantity = document.getElementById(quantityId).value;
-            // Creating a li element to add it to ul 
-            var node = document.createElement("LI");
-            // id of li element
-            item = "item"+i;
-            node.setAttribute("id", item)
-            // cost of the selected shirt
-            itemCost[i-1] = Number(price) * Number(quantity);
-            // Updating the index i 
-            i += 1;
-            // text of the li element
-            var textnode = document.createTextNode(name+" "+quantity+" x R "+price+" , size: "+ size);
-            // add the text to li element
-            node.appendChild(textnode);
-            // add li element to ul list
-            document.getElementById("items").appendChild(node);
+  function displayProducts(products){
+    document.querySelector("#products").innerHTML = "";
 
-            total += Number(price) * Number(quantity);
-            // update the total
-            document.getElementById("total").innerHTML = "Total: " + " R " + total.toFixed(2);
-            
-            // Add a remove button 
-            document.getElementById(item).innerHTML += '<button onclick="deleItem('+"'"+item+"'"+')">x</button>';
-            // you have to respect the order of: '' and ""
-            
+    products.forEach((product, position) => {
+        document.querySelector("#products").innerHTML += `
+        <div class="card d-inline-flex p-2 bd-highlight" style="width: 18rem;">
+        <img id="img" class="card-img-top" src="${product.img}" alt="Card image cap">
+        <div class="card-body">
+            <h4 id="title" class="card-title">${product.title}</h4>
+            <h5 id="category" class="card-title">${product.category}</h5>
+            <p id="price" class="card-text">R${product.price}</p>
+            <div>
+            <button class="btn btn-danger" onclick="deleteProduct(${position})">Delete</button>
+            <button id="editBtn" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal${position}"><i class='bx bxs-pencil'></i></button>
+
+        <p> Quantity:</p>
+                <input type="number" name="Quantity" class="form-control mb-2" id="quantity${position}" min="1" value="1">
+                <button class="btn btn-success mt-1" onclick="addToCart(${position})">Add to cart</button>
+
+            <div/>
+        </div>
+        </div>
+    
+        <div class="modal fade" id="editModal${position}" tabposition="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title">Editing ${product.title}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="continrnt">Image:</label>
+                        <input type="text" class="form-control w-50 mb-2" id="imgEdit${position}" placeholder="Image URL" autofocus  value="${product.img}"><br>
+                        <label for="continrnt">Title:</label>
+                        <input type="text" class="form-control w-50 mb-2" id="titleEdit${position}" placeholder="Enter title" value="${product.title}"><br>
+                        <label for="continrnt">Category:</label>
+                        <input type="text" class="form-control w-50 mb-2" id="categoryEdit${position}" placeholder="Enter category" value="${product.category}"><br>
+                        <label for="continrnt">Price:</label>
+                        <input type="text" class="form-control w-50 mb-2" id="priceEdit${position}" placeholder="Enter price" value="${product.price}">
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="updateProduct(${position})">Edit product</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+    });
+}
+displayProducts(products);
+// CREATE
+function createProduct(){
+    let img = document.querySelector("#img").value;
+    let title = document.querySelector("#title").value;
+    let category = document.querySelector("#category").value;
+    let price = document.querySelector("#price").value;
+
+
+
+    try {
+          if (!title || !price || !img) throw new Error("Please fill in all fields");
+          products.push({
+            title,
+            category,
+            price,
+            img,
+          });
+          localStorage.setItem("products", JSON.stringify(products));
+          displayProducts(products);
+        } catch (err) {
+          alert(err);
         }
+      }
+      
 
-         // delete message when the select element is clicked
-         function deleteE(eId) {
-            document.getElementById(eId).innerHTML = ' ';
-        }
+// DELETE
+function deleteProduct(position) {
+  let confirmation = confirm(
+    "Are you sure you want to delete the selected product?"
+  );
 
-        // Remove a product from the cart
-        function deleItem(eId){
-            document.getElementById(eId).remove();
-            // slice is string method
-            // eId (element Id) contain root + number (ex: item4)
-            // n is the number in eId 
-            n = Number(eId.slice(-1)) - 1;
-            // remove the cost of the product deleted from the cart
-            total -= itemCost[n];
-            // Updating the cost of products in the cart
-            document.getElementById("total").innerHTML = "Total: " + " R" + total.toFixed(2) ; 
+  if (confirmation) {
+    products.splice(position, 1);
+    localStorage.setItem("products", JSON.stringify(products));
+    displayProducts(products);
+  }
+}
+
+
+
+// UPDATE
+function updateProduct(position){
+    let img = document.querySelector(`#imgEdit${position}`).value;
+    let title = document.querySelector(`#titleEdit${position}`).value;
+    let category = document.querySelector(`#categoryEdit${position}`).value;
+    let price = document.querySelector(`#priceEdit${position}`).value;
+    try {
+          if (!title || !price || !img) throw new Error("Please fill in all fields");
+          products[position] = {
+            title,
+            category,
+            price,
+            img,
+          };
+          localStorage.setItem("products", JSON.stringify(products));
+          displayProducts(products);
+        } catch (err) {
+          alert(err);
         }
+      }
+
+
+function addToCart(position){
+    let qty = document.querySelector(`#quantity${position}`).value;
+    let added = false;
+
+    cart.forEach((product) => {
+        if(product.title == products[position].title){
+            alert(`You have added ${qty}  ${products[position].title} to the cart`);
+            product.qty = parseInt(product.qty) + parseInt(qty);
+            added = true;
+            localStorage.setItem("cart", JSON.stringify(cart))
+        }
+    });
+    if(!added){
+        alert(`You have added ${qty}  ${products[position].title} to the cart`);
+        cart.push({ ...products[position], qty});
+        console.log(cart);
+        localStorage.setItem("cart", JSON.stringify(cart))
+    }
+   showcart(cart);
+}
+
+function categorySort(){
+    let category = document.querySelector("#categorySort").value;
+
+    if(category == "All"){
+        displayProducts(products);
+        return;
+    }
+
+    let fltrdCat = products.filter((product => {
+        return product.category == category;
+    }));
+
+    displayProducts(fltrdCat);
+}
+
+function priceSort() {
+    let direction = document.querySelector("#priceSort").value;
+  
+    let sortedProducts = products.sort((a, b) => a.price - b.price);
+  
+    console.log(sortedProducts);
+  
+    if (direction == "Descending") sortedProducts.reverse();
+    displayProducts(sortedProducts);
+  }
+
+  function sortName() {
+    let direction = document.querySelector("#sortName").value;
+  
+    let sortedProducts = products.sort((a, b) => {
+      if (a.title.toLowerCase() < b.title.toLowerCase()) {
+        return -1;
+      }
+      if (a.title.toLowerCase() > b.title.toLowerCase()) {
+        return 1;
+      }
+      return 0;
+    });
+    if (direction == "Descending") sortedProducts.reverse();
+    console.log(sortedProducts);
+    displayProducts(products);
+  }

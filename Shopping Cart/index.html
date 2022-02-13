@@ -1,119 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
+  <head>
+    <title> eAthlete Store</title>
+    <link rel="icon" href="https://cdn.worldvectorlogo.com/logos/ea-sports.svg">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-    <title>Online Boutique</title>
-</head>
+  </head>
 <body>
+  
+  <div id="navbar">  
+    <nav class="navbar bg-dark">
+        <div class="container-fluid">
+          <h1 class="display-6 text-light">EA Sports eAthlete Store</h1>
 
-    <h2 class="ti">T-shirt collection</h2>
-    <div class="container">
-        <div class="articles">
-            <div>
-                <img src="https://img01.ztat.net/article/spp-media-p1/943b3e2336b747888329e746fcccf2de/c33298ae50d34ffda271d496d9e3ff6e.jpg?imwidth=156&filter=packshot" alt="aaron-ramsdale">
-                <div class="prod">
-                    <h3 class="tit" id="brand1">Nike</h3>
-                    <h4 id="price1"> 299.99</h4>
-                    <h4> zar</h4>
-                </div>
-                <div class="inputs">
-                    <input type="number" id="quantity1" name="quantity1" min="1" max="99" value="1"> 
-                     <select id="size1" name="size1" onclick="deleteE('message1')">
-                        <option value="size" disabled selected>Size</option>
-                        <option value="XS">XS</option>
-                        <option value="S">S</option>
-                        <option value="M">M</option>
-                        <option value="L">L</option>
-                        <option value="XL">XL</option>
-                    </select>
-                    <div>
-                        <button class="addTo" onclick="add(1)">Add</button>
-                    </div>
-                </div>
-                <p id="message1"></p>
-            </div>
-            <div>
-                <img src="https://assets.superbalistcdn.co.za/200x289/filters:quality():format(webp)/2483936/original.jpg">
-                <div class="prod">
-                    <h3 class="tit" id="brand2">Levi's</h3>
-                    <h4 id="price2"> 180.00</h4>
-                    <h4> zar</h4>
-                </div>
-                <div class="inputs">
-                    <input type="number" id="quantity2" name="quantity2" min="1" max="99" value="1">
-                    <select id="size2" name="size2" onclick="deleteE('message2')">
-                        <option value="size" disabled selected>Size</option>
-                        <option value="XS">XS</option>
-                        <option value="S">S</option>
-                        <option value="M">M</option>
-                        <option value="L">L</option>
-                        <option value="XL">XL</option>
-                    </select>
-                    <div>
-                        <button class="addTo" onclick="add(2)">Add</button>
-                    </div>
-                </div>
-                <p id="message2"></p>
-            </div>
-            <div>
-                <img id="size-fix" src="https://www.studio-88.co.za/pub/media/catalog/product/cache/bd76f6abb00859c1813be1a204cdea22/p/m/pma3387b-puma-colorblock-tee-white-58690856-v1_jpg_1.jpg">
-                <div class="prod">
-                    <h3 class="tit" id="brand3">Puma</h3>
-                    <h4 id="price3"> 299.99</h4>
-                    <h4> zar</h4>
-                </div>
-                <div class="inputs">
-                    <input type="number" id="quantity3" name="quantity3" min="1" max="99" value="1">
-                    <select id="size3" name="size3" onclick="deleteE('message3')">
-                        <option value="size" disabled selected>Size</option>
-                        <option value="XS">XS</option>
-                        <option value="S">S</option>
-                        <option value="M">M</option>
-                        <option value="L">L</option>
-                        <option value="XL">XL</option>
-                    </select>
-                    <div>
-                        <button class="addTo" onclick="add(3)">Add</button>
-                    </div>
-                </div>
-                <p id="message3"></p>
-            </div>
-            <div>
-                <img id="size-fix"src="https://img01.ztat.net/article/spp-media-p1/9d37d3b45061499cbf0b78c941cbd33a/0ff89863ff9544eca463f6966a69841f.jpg?imwidth=762&filter=packshot">
-                <div class="prod">
-                    <h3 class="tit" id="brand4">Adidas</h3>
-                    <h4 id="price4"> 349.99</h4>
-                    <h4> zar</h4>
-                </div>
-                <div class="inputs">
-                    <input type="number" id="quantity4" name="quantity4" min="1" max="99" value="1">
-                    <select id="size4" name="size4" onclick="deleteE('message4')">
-                        <option value="size" disabled selected>Size</option>
-                        <option value="XS">XS</option>
-                        <option value="S">S</option>
-                        <option value="M">M</option>
-                        <option value="L">L</option>
-                        <option value="XL">XL</option>
-                    </select>
-                    <div>
-                        <button class="addTo" onclick="add(4)">Add</button>
-                    </div>
-                </div>
-                <p id="message4"></p>
-            </div>
+          <button  id="add-btn" class="btn bg-success text-light" type="submit" data-bs-toggle="modal" data-bs-target="#exampleModal">Add</button>
+            <a href="cart.html"><button  id="" class="btn bg-primary text-light" type="button"><i class='bx bxs-cart'></i></button></a>  
         </div>
-        <div class="cart">
-            <h3 class="tit">Cart</h3>
-            <ul id="items">
-            </ul> 
-            <h3 id="total" style="text-align: right;">Total: R 0</h3>
+        </nav>
+</div>
+
+<div class="modal fade" id="exampleModal" tabposition="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add a new product</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body"> 
+  
+        <input class="form-control w-50 mb-2" type="text" id="img" placeholder="Image URL">
+        <input class="form-control w-50 mb-2" type="text" id="title" placeholder="Title">
+        <input class="form-control w-50 mb-2" type="text" id="category" placeholder="Category">
+        <input class="form-control w-50 mb-2" type="text" id="price" placeholder="Price">
+  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="createProduct()">ADD</button>
+        </div>
+      </div>
     </div>
-    
-    <script src="script.js"></script>
+  </div>
+
+
+  <div id="main-box">
+    <div id="sortt">
+      <label for="" class="form-label">Sort by category: </label>
+      <select name="categorySort" id="categorySort" onchange="categorySort()">
+        <option value="All">All</option>
+        <option value="Arts and crafts">Fifa 22</option>
+        <option value="Stationary">UFC 3</option>
+        <option value="Books">Madden 22</option>
+        <option value="Education">NHL 22</option>
+      </select>
+      <label for="" class="form-label">Sort by price: </label>
+      <select name="priceSort" id="priceSort" onchange="priceSort()">
+        <option value=""></option>
+        <option value="Ascending">Ascending</option>
+        <option value="Descending">Descending</option>
+      </select>
+      <label for="" class="form-label">Sort by name: </label>
+      <select name="sortName" id="sortName" onchange="sortName()">
+        <option value=""></option>
+        <option value="Ascending">Ascending</option>
+        <option value="Descending">Descending</option>
+      </select>
+    </div>
+<div id="products"></div>
+
+  <div class="container mt-5 pt-4">
+    <div id="cart"></div>
+    <div
+      id="cart-footer"
+      class="d-flex justify-content-between align-items-center mb-3"></div>
+  </div>
+  <script src=
+"script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+  
+  
+  
+  <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
